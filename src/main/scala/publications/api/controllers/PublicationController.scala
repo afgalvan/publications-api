@@ -14,13 +14,13 @@ class PublicationController(publicationRegistry: ActorRef[PublicationService.Com
 
   def getPublications: Future[Publications] = publicationRegistry.ask(GetPublications)
 
-  def getPublication(name: String): Future[GetPublicationResponse] =
-    publicationRegistry.ask(GetPublication(name, _))
+  def getPublication(ISBN: String): Future[GetPublicationResponse] =
+    publicationRegistry.ask(GetPublication(ISBN, _))
 
   def createPublication(publication: Publication): Future[SavedPublicationResponse] =
     publicationRegistry.ask(CreatePublication(publication, _))
 
-  def deletePublication(name: String): Future[ActionPerformed] =
-    publicationRegistry.ask(DeletePublication(name, _))
+  def deletePublication(ISBN: String): Future[ActionPerformed] =
+    publicationRegistry.ask(DeletePublication(ISBN, _))
 
 }

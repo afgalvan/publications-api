@@ -4,7 +4,7 @@ import akka.actor.typed.scaladsl.Behaviors
 import akka.actor.typed.{ActorRef, Behavior}
 import scala.collection.immutable
 
-final case class Publication(ISBN: String, title: String, author: String, year: Int, price: Double)
+final case class Publication(isbn: String, title: String, author: String, year: Int, price: Double)
 final case class Publications(publication: immutable.Seq[Publication])
 
 object PublicationService {
@@ -35,10 +35,10 @@ object PublicationService {
       replyTo ! SavedPublicationResponse(publication)
       registry(publications + publication)
     case GetPublication(isbn, replyTo) =>
-      replyTo ! GetPublicationResponse(publications.find(_.ISBN == isbn))
+      replyTo ! GetPublicationResponse(publications.find(_.isbn == isbn))
       Behaviors.same
     case DeletePublication(isbn, replyTo) =>
       replyTo ! ActionPerformed(s"Publication $isbn deleted.")
-      registry(publications.filterNot(_.ISBN == isbn))
+      registry(publications.filterNot(_.isbn == isbn))
   }
 }
